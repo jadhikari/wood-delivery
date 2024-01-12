@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+        <h2 class= "text-center">List of Suppliers</h2>
+
+        
+        {% if perms.wood_scaling.add_supplier %}
+            <a href="{% url 'add_supplier' %}" class="btn btn-primary float-right" style="padding:5px;margin-right:20px;">Add Supplier</a>
+        {% endif %}
+        
+
+        
+        <br><br>
+        <table class="table-sm table-bordered mx-auto" id="fulltable" >
+            <tbody>
+                <thead>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>K. Name</th>
+                    <th>Registration</th>
+                    <th>Address</th>
+                    <th>Document</th>
+                    <th>Created Time</th>
+                    <th>Updated Time</th>
+                    <th>User</th>
+                    <th>Action</th>
+                </thead>
+                {% for supplier in supplier_data %}
+                    <tr>
+                        <td>
+                            {% if perms.wood_scaling.view_forests %}
+                                <a href="{% url 'show_forests_data' supplier.id %}">{{ supplier.id }}</a>
+                            {% else %}
+                                {{ supplier.id }}
+                            {% endif %}
+                        </td>
+                        <td>{{ supplier.name }}</td>
+                        <td>{{ supplier.k_name }}</td>
+                        <td>{{ supplier.registration }}</td>
+                        <td>{{ supplier.address }}</td>
+                        <td>{{ supplier.document }}</td>
+                        <td>{{ supplier.created_at }}</td>
+                        <td>{{ supplier.updated_at }}</td>
+                        <td>{{ supplier.by_user }}</td>
+                        <td>
+                            
+                            {% if perms.wood_scaling.change_supplier %}
+                                <a href="{% url 'edit_supplier' supplier.id %}">Edit</a>
+                            {% else %}
+                                None
+                            {% endif %}
+                            
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+
+{% endblock %}

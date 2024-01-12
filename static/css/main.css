@@ -1,0 +1,117 @@
+body {
+  font-family: 'Palatino', serif;
+}
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #386b8a;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  border-right: 3px solid rgb(54, 54, 240);
+}
+.sidenav a {
+  padding: 8px 8px 8px 22px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #f8fafc;
+  display: block;
+  transition: 0.01s;
+}
+.sidenav a:hover {
+  color: rgb(0, 0, 0)
+}
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+} 
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+#nav-bar{
+  background-color: #386b8a;
+  border-bottom: 3px solid rgb(54, 54, 240); /* Set the bottom border to 3 pixels and blue color */
+  padding: 10px;
+}
+#mySidenav ul {
+  list-style-type: none; /* Remove default list bullets */
+  margin: 0;
+  padding: 0;
+}
+.active a{
+ background-color: white;
+ color: black;
+}
+
+#logintitle p{
+  color: #ffffff;
+}
+
+/* Data display from for big table start */
+#fulltable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+#fulltable th{
+  text-align: center;
+}
+
+#fulltable, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Data display from for big table end */
+
+
+/* For Wood scaling list page */
+
+#searchbtn{
+  margin-left: 5px;
+}
+
+/* For Wood scaling list page */
+.custom-table {
+  width: 50%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.custom-table th,
+.custom-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.custom-table th {
+  background-color: #f2f2f2;
+  text-align: right;
+}
+
+
+
+

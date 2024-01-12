@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h2 class= "text-center">Show Forests Data For Supplier: {{ supplier.name }}</h2>
+{% if perms.wood_scaling.add_forests %}
+    <a href="{% url 'add_forest' supplier_id=supplier.id %}" class="btn btn-primary float-right" style="padding:5px;margin-right:20px;">Add Forest</a>
+{% endif %}
+<br><br>
+<table class="table-sm table-bordered mx-auto" id='fulltable'>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Forest Location</th>
+            <th>K. Forest Location</th>
+            <th>Registration</th>
+            <th>Registration Date</th>
+            <th>Authority</th>
+            <th>Classification</th>
+            <th>Removal</th>
+            <th>Area</th>
+            <th>Distance</th>
+            <th>Document</th>
+            <th>Created Time</th>
+            <th>Updated Time</th>
+            <th>User</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for forest in forests_data %}
+            <tr>
+                <td>{{ forest.id }}</td>
+                <td>{{ forest.location }}</td>
+                <td>{{ forest.k_location }}</td>
+                <td>{{ forest.registration }}</td>
+                <td>{{ forest.date }}</td>
+                <td>{{ forest.authority }}</td>
+                <td>
+                    {{ forest.classification }}
+                </td>
+                <td>
+                    {{ forest.removal }}
+                </td>
+                <td>{{ forest.area }}</td>
+                <td>{{ forest.distance }}</td>
+                <td>{{ forest.document }}</td>
+                <td>{{ forest.created_at }}</td>
+                <td>{{ forest.updated_at }}</td>
+                <td>{{ forest.by_user }}</td>
+                <td>
+                    {% if perms.wood_scaling.change_forests %}
+                        <a href="{% url 'edit_forests' supplier_id=supplier.id forest_id=forest.id %}">Edit</a>
+                    {% else %}
+                        None
+                    {% endif %}
+                </td>
+
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

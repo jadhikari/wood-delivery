@@ -1,0 +1,76 @@
+<!-- myapp/templates/myapp/register_supplier_logo.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if perms.doc_pdf.add_supplierlogo %}
+  <h2 class="text-center">Register Supplier Logo</h2>
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="table-sm table-bordered custom-table">
+        <tbody>
+          <table class="table-sm table-bordered custom-table">
+              <tbody>
+                  {% for field in form %}
+                      <tr>
+                          <th>{{ field.label_tag }}</th>
+                          <td>{{ field }}</td>
+                      </tr>
+                  {% endfor %}
+              </tbody>
+        </tbody>
+      </table>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+{% endif %}
+  
+
+<div class="logo-list-container">
+    <h3>Supplier Logo List</h3>
+    <table class="table-sm table-bordered mx-auto" id="fulltable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Logo</th>
+          <th>Created At</th>
+          <th>Updated At</th>
+          <th>User</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for logo in logos %}
+          <tr>
+            <td>{{ logo.id }}</td>
+            <td>{{ logo.supplier_name.name }}</td>
+            <td>{{ logo.email }}</td>
+            <td>
+              <img src="{{ logo.stamp.url }}" alt="{{ logo.supplier_name.name }}" style="max-width: 50px; max-height: 50px;">
+            </td>
+            <td>{{ logo.created_at }}</td>
+            <td>{{ logo.updated_at }}</td>
+            <td>{{ logo.by_user }}</td>
+            {% if perms.doc_pdf.change_supplierlogo %}
+              <td><a href="{% url 'edit_supplier_logo' logo.id %}">Edit</a></td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+{% endblock %}

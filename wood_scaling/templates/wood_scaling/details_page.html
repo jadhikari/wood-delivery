@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<h2 class="text-center" > Details Page of Id Num. {{ entry.id }} </h2>
+
+<table class="table-sm table-bordered custom-table" >
+    <tbody>
+        <tr>
+            <th>Weighting Day: </th>
+            <td>{{ entry.weighting_day }}</td>
+        </tr>
+        <tr>
+            <th>Slip No: </th>
+            <td>{{ entry.slip_no }}</td>
+        </tr>
+        <tr>
+            <th>Wood Type: </th>
+            <td>
+                {% for wood in wood_type_data %}
+                    {% if wood.id == entry.woods_type_num %}
+                        {{ wood.name }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>Truck Number: </th>
+            <td>{{ entry.trucks_num }}</td>
+        </tr>
+        <tr>
+            <th>Vendor: </th>
+            <td>
+                {% for supplier in supplier_data %}
+                    {% if supplier.id == entry.vendor_num %}
+                        {{ supplier.name }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>Source: </th>
+            <td>
+                {% for forests in forests_data %}
+                    {% if forests.id == entry.sources_num %}
+                        {{ forests.location }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>Others: </th>
+            <td>
+                {% for forests in forests_data %}
+                    {% if forests.id == entry.sources_num %}
+                        {{ forests.registration }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>Total Weighting time: </th>
+            <td>{{ entry.total_weight_time }}</td>
+        </tr>
+        <tr>
+            <th>Total Weight: </th>
+            <td>{{ entry.total_weight }} KG </td>
+        </tr>
+        <tr>
+            <th>Empty Weight Time: </th>
+            <td>{{ entry.empty_weight_time }}</td>
+        </tr>
+        <tr>
+            <th>Empty Weight: </th>
+            <td>{{ entry.empty_weight }} KG</td>
+        </tr>
+        <tr>
+            <th>Net Weight: </th>
+            <td>{{ entry.net_weight }} KG </td>
+        </tr>
+        <tr>
+            <th>Remarks: </th>
+            <td>{{ entry.remarks }}  
+                <button type="button" class="btn btn-sm btn-info mx-auto float-right" data-toggle="modal" data-target="#remarksModal">Edit</button>
+            </td>
+        </tr>
+        <tr>
+            <th>Created Time: </th>
+            <td>{{ entry.created_at }}</td>
+        </tr>
+        <tr>
+            <th>Updated Time: </th>
+            <td>{{ entry.updated_at }}</td>
+        </tr>
+        <tr>
+            <th>User: </th>
+            <td>{{ entry.by_user }}</td>
+        </tr>
+            
+        </tr>
+    </tbody>
+</table>
+<br>
+<div class="text-center">
+    <a href="/wood-scaling" class="btn btn-secondary">Cancel</a>
+</div>
+
+<!-- Remarks Edit Modal -->
+<div class="modal fade" id="remarksModal" tabindex="-1" role="dialog" aria-labelledby="remarksModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="remarksModalLabel">Edit Remarks</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'details_page' entry.id %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-sm btn-success">Update</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

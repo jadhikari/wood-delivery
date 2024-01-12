@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h2 class=" text-center">Add Forest for: {{ supplier.name }}</h2>
+    {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+        </div>
+    {% endif %}
+    <br>
+  <form method="post" action="" id= "addForestForm">
+    {% csrf_token %}
+    <table class="table-sm table-bordered custom-table">
+        <tbody>
+            <tr>
+              <th scope="row" >Supplier id:</th>
+              <td>
+                {{ form.supplier_id }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" >Forest id:</th>
+              <td>
+                {{ form.id }}
+                {{ form.id.errors }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" >Location:</th>
+              <td>
+                {{ form.location }}
+                {{ form.location.errors }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" >K. Location:</th>
+              <td>
+                {{ form.k_location }}
+                {{ form.k_location.errors }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" >Date:</th>
+              <td>
+                {{ form.date }}
+                {{ form.date.errors }}
+              </td>
+            </tr>
+            <tr>
+                <th scope="row" >Registration:</th>
+                <td>
+                  {{ form.registration }}
+                  {{ form.registration.errors }}
+                </td>
+            </tr>
+            <tr>
+              <th scope="row" >Authority:</th>
+              <td>
+                {{ form.authority }}
+                {{ form.authority.errors }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" >Classification:</th>
+              <td>
+                {{ form.classification }}
+                {{ form.classification.errors }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" >Removal:</th>
+              <td>
+                {{ form.removal }}
+                {{ form.removal.errors }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" >Area:</th>
+              <td>
+                {{ form.area }} m<sup>2</sup>
+                {{ form.area.errors }}
+              </td>
+            </tr>
+            <tr>
+            <th scope="row" >Distance:</th>
+              <td>
+                {{ form.distance }} Km
+                {{ form.distance.errors }}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" >Document:</th>
+              <td>
+                {{ form.document }}
+                {{ form.document.errors }}
+              </td>
+            </tr>
+          </tbody>
+            
+    </table>
+    <br>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Save Forest</button>
+        <a href="{% url 'show_forests_data' supplier_id=supplier.id %}" class="btn btn-secondary">Cancel</a>
+        <button type="button" class="btn btn-warning" onclick="resetForm()">Reset</button>
+    </div>
+</form>
+<script>
+    function resetForm() {
+        document.getElementById("addForestForm").reset();
+    }
+</script>
+{% endblock %}
