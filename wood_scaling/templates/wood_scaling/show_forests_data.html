@@ -5,10 +5,21 @@
 {% block content %}
 <h2 class= "text-center">Show Forests Data For Supplier: {{ supplier.name }}</h2>
 {% if perms.wood_scaling.add_forests %}
-    <a href="{% url 'add_forest' supplier_id=supplier.id %}" class="btn btn-primary float-right" style="padding:5px;margin-right:20px;">Add Forest</a>
+    <a href="{% url 'add_forest' supplier_id=supplier.id %}" class="btn btn-primary float-right" id="addForestBtn" style="padding:5px;margin-right:20px;">Add Forest</a>
+    <script>
+        document.getElementById('addForestBtn').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            if (confirm("Do you want to add a Forest?")) {
+                window.location.href = "{% url 'add_forest' supplier_id=supplier.id %}";
+            } else {
+                // Do nothing or redirect to another page if needed
+            }
+        });
+    </script>
 {% endif %}
 <br><br>
-<table class="table-sm table-bordered mx-auto" id='fulltable'>
+<table class="table-sm table-bordered mx-auto" id='fulltable' class="table">
     <thead>
         <tr>
             <th>ID</th>
@@ -52,7 +63,39 @@
                 <td>{{ forest.by_user }}</td>
                 <td>
                     {% if perms.wood_scaling.change_forests %}
-                        <a href="{% url 'edit_forests' supplier_id=supplier.id forest_id=forest.id %}">Edit</a>
+                        <!-- <a href="{% url 'edit_forests' supplier_id=supplier.id forest_id=forest.id %}">Edit</a> -->
+                        <a href="#" class="editForestBtn" data-supplier-id="{{ supplier.id }}" data-forest-id="{{ forest.id }}">Edit</a>
+
+                        <script>
+                            // Check if the event listener is already attached to avoid duplication
+                            if (!window.editForestBtnListenersAttached) {
+                                // Using class selector for all elements with the class editForestBtn
+                                var parentElement = document.querySelector('.table') || document.body;
+                        
+                                parentElement.addEventListener('click', function (e) {
+                                    // Check if the clicked element has the editForestBtn class
+                                    if (e.target && e.target.classList.contains('editForestBtn')) {
+                                        e.preventDefault();
+                        
+                                        var supplierId = e.target.getAttribute('data-supplier-id');
+                                        var forestId = e.target.getAttribute('data-forest-id');
+                        
+                                        console.log("Supplier ID:", supplierId);
+                                        console.log("Forest ID:", forestId);
+                        
+                                        if (confirm("Are you sure you want to edit this forest?")) {
+                                            // Use the correct URL pattern for your project
+                                            window.location.href = `/wood-scaling/supplier/${supplierId}/forests_list/${forestId}/edit/`;
+                                        } else {
+                                            // Do nothing or provide feedback to the user
+                                        }
+                                    }
+                                });
+                        
+                                // Set a flag to indicate that the event listener is attached
+                                window.editForestBtnListenersAttached = true;
+                            }
+                        </script>
                     {% else %}
                         None
                     {% endif %}
@@ -62,4 +105,6 @@
         {% endfor %}
     </tbody>
 </table>
+
+
 {% endblock %}

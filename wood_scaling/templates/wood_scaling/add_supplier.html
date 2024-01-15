@@ -17,8 +17,16 @@
                 <tbody>
                     {% for field in form %}
                         <tr>
-                            <th>{{ field.label_tag }}</th>
-                            <td>{{ field }}</td>
+                            <th>{{ field.label_tag }}<span style="color: red;"><sup>*</sup></span></th>
+                            <td>{{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger">
+                                        {% for error in field.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -26,7 +34,7 @@
 
             <br>
             <div class="text-center">
-                <button type="submit" class="btn btn-sm btn-primary">Add Supplier</button>
+                <button type="button" class="btn btn-sm btn-primary" id="addSupplierBtn">Add Supplier</button>
                 <a href="{% url 'supplier_list' %}" class="btn btn-sm btn-secondary">Cancel</a>
                 <button type="button" class="btn btn-sm btn-warning" onclick="resetForm()">Reset</button>
             </div>
@@ -36,6 +44,14 @@
     function resetForm() {
         document.getElementById("addSupplierForm").reset();
     }
+
+    document.getElementById('addSupplierBtn').addEventListener('click', function () {
+        if (confirm("Are you sure the information is correct?")) {
+            document.getElementById('addSupplierForm').submit();
+        } else {
+            // Do nothing or provide feedback to the user
+        }
+    });
 </script>
 
 {% endblock %}

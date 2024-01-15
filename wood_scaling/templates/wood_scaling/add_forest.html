@@ -13,83 +13,83 @@
     <table class="table-sm table-bordered custom-table">
         <tbody>
             <tr>
-              <th scope="row" >Supplier id:</th>
+              <th scope="row" >Supplier id:<span style="color: red;"><sup>*</sup></span></th>
               <td>
                 {{ form.supplier_id }}
               </td>
             </tr>
             <tr>
-              <th scope="row" >Forest id:</th>
+              <th scope="row" >Forest id:<span style="color: red;"><sup>*</sup></span></th>
               <td>
                 {{ form.id }}
                 {{ form.id.errors }}
               </td>
             </tr>
             <tr>
-              <th scope="row" >Location:</th>
+              <th scope="row" >Location:<span style="color: red;"><sup>*</sup></span></th>
               <td>
                 {{ form.location }}
                 {{ form.location.errors }}
               </td>
             </tr>
             <tr>
-              <th scope="row" >K. Location:</th>
+              <th scope="row" >K. Location:<span style="color: red;"><sup>*</sup></span></th>
               <td>
                 {{ form.k_location }}
                 {{ form.k_location.errors }}
               </td>
             </tr>
             <tr>
-              <th scope="row" >Date:</th>
+              <th scope="row" >Date:<span style="color: red;"><sup>*</sup></span></th>
               <td>
                 {{ form.date }}
                 {{ form.date.errors }}
               </td>
             </tr>
             <tr>
-                <th scope="row" >Registration:</th>
+                <th scope="row" >Registration:<span style="color: red;"><sup>*</sup></span></th>
                 <td>
                   {{ form.registration }}
                   {{ form.registration.errors }}
                 </td>
             </tr>
             <tr>
-              <th scope="row" >Authority:</th>
+              <th scope="row" >Authority:<span style="color: red;"><sup>*</sup></span></th>
               <td>
                 {{ form.authority }}
                 {{ form.authority.errors }}
               </td>
             </tr>
             <tr>
-              <th scope="row" >Classification:</th>
+              <th scope="row" >Classification:<span style="color: red;"><sup>*</sup></span></th>
               <td>
                 {{ form.classification }}
                 {{ form.classification.errors }}
               </td>
             </tr>
             <tr>
-              <th scope="row" >Removal:</th>
+              <th scope="row" >Removal:<span style="color: red;"><sup>*</sup></span></th>
               <td>
                 {{ form.removal }}
                 {{ form.removal.errors }}
               </td>
             </tr>
             <tr>
-              <th scope="row" >Area:</th>
+              <th scope="row" >Area:<span style="color: red;"><sup>*</sup></span></th>
               <td>
                 {{ form.area }} m<sup>2</sup>
                 {{ form.area.errors }}
               </td>
             </tr>
             <tr>
-            <th scope="row" >Distance:</th>
+            <th scope="row" >Distance:<span style="color: red;"><sup>*</sup></span></th>
               <td>
                 {{ form.distance }} Km
                 {{ form.distance.errors }}
               </td>
             </tr>
             <tr>
-              <th scope="row" >Document:</th>
+              <th scope="row" >Document:<span style="color: red;"><sup>*</sup></span></th>
               <td>
                 {{ form.document }}
                 {{ form.document.errors }}
@@ -100,7 +100,7 @@
     </table>
     <br>
     <div class="text-center">
-        <button type="submit" class="btn btn-primary">Save Forest</button>
+        <button type="submit" class="btn btn-primary" id="addForestBtn">Save Forest</button>
         <a href="{% url 'show_forests_data' supplier_id=supplier.id %}" class="btn btn-secondary">Cancel</a>
         <button type="button" class="btn btn-warning" onclick="resetForm()">Reset</button>
     </div>
@@ -109,5 +109,12 @@
     function resetForm() {
         document.getElementById("addForestForm").reset();
     }
+    document.getElementById('addForestBtn').addEventListener('click', function () {
+        if (confirm("Are you sure the information is correct?")) {
+            document.getElementById('addForestForm').submit();
+        } else {
+            // Do nothing or provide feedback to the user
+        }
+    });
 </script>
 {% endblock %}

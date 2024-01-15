@@ -20,7 +20,7 @@
               <tbody>
                   {% for field in form %}
                       <tr>
-                          <th>{{ field.label_tag }}</th>
+                          <th>{{ field.label_tag }}<span style="color: red;"><sup>*</sup></span></th>
                           <td>{{ field }}</td>
                       </tr>
                   {% endfor %}

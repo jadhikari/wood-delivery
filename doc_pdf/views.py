@@ -62,6 +62,9 @@ def verify_and_edit_pdf(request, certificate_id):
     certificate = get_object_or_404(Certificate, id=certificate_id)
     certificate_supplier_name_id = certificate.supplier_name_id
     
+    user_string = str(request.user) if request.user.is_authenticated else 'default_by_user'
+    certificate.by_user = user_string
+
     # Step 2: Retrieve Certificate and Stamp
     edit_certificate_path = certificate.unverified_certificate.path
     supplier_logo = get_object_or_404(SupplierLogo, supplier_name_id=certificate.supplier_name_id)
@@ -120,6 +123,7 @@ def verify_and_edit_pdf(request, certificate_id):
     with File(open(new_pdf_path, 'rb')) as verified_certificate_file:
         certificate.verified_certificate.save(pdf_filename, verified_certificate_file)
 
+
     certificate.save()
 
     return redirect('verification')
@@ -134,7 +138,7 @@ def supplier_logo(request):
             user_string = str(request.user) if request.user.is_authenticated else 'default_by_user'
             form.instance.by_user = user_string
 
-            print(form.cleaned_data)  # Print form data to console
+            print(user_string)  # Print form data to console
 
             try:
                 form.save()
@@ -163,6 +167,8 @@ def edit_supplier_logo(request, logo_id):
     if request.method == 'POST':
         form = EditSupplierLogoForm(request.POST, request.FILES, instance=logo)
         if form.is_valid():
+            user_string = str(request.user) if request.user.is_authenticated else 'default_by_user'
+            form.instance.by_user = user_string
             try:
                 form.save()
                 messages.success(request, 'Supplier logo updated successfully.')

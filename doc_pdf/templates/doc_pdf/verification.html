@@ -11,7 +11,8 @@
       {% endfor %}
     </ul>
   {% endif %}
-  <form method="post" enctype="multipart/form-data">
+
+  <form id="certificateForm" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <table class="table-sm table-bordered custom-table">
       <tbody>
@@ -19,15 +20,25 @@
             <tbody>
                 {% for field in form %}
                     <tr>
-                        <th>{{ field.label_tag }}</th>
+                        <th>{{ field.label_tag }} <span style="color: red;"><sup>*</sup></span></th>
                         <td>{{ field }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
       </tbody>
     </table>
+    <br>
       <div class="text-center">
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="button" class="btn btn-primary" id="saveBtn">Save </button>
+        <script>
+            document.getElementById('saveBtn').addEventListener('click', function () {
+                if (confirm("Did you upload the correct certificate for the correct supplier? Double-check it!")) {
+                    document.getElementById('certificateForm').submit();
+                } else {
+                    // Do nothing or provide feedback to the user
+                }
+            });
+        </script>
       </div>
   </form>
 {% endif %}
@@ -86,9 +97,9 @@
                                 {%for supplierLogo in supplierLogos %}
                                     {% if certificate.supplier_name_id == supplierLogo.supplier_name_id  %}
                                         {%if request.user.username in supplierLogo.email%}
-                                            <form method="post" action="{% url 'verify_and_edit_pdf' certificate.id %}">
+                                            <form id="verifyForm" method="post" action="{% url 'verify_and_edit_pdf' certificate.id %}">
                                                 {% csrf_token %}
-                                                <button class="btn-sm btn-primary" type="submit">Verify</button>
+                                                <button class="btn-sm btn-primary" type="button" id="verifyBtn">Verify</button>
                                             </form>
                                         {% endif %}
                                     {% endif %}
@@ -103,7 +114,17 @@
   </table>
 </div>
 
+<script>
+    document.getElementById('verifyBtn').addEventListener('click', function () {
+        if (confirm("Did you check the unverified certificate? If not, please download and check it.")) {
+            document.getElementById('verifyForm').submit();
+        } else {
+            // Do nothing
+        }
+    });
 
+    
+</script>
 
 
 {% endblock %}

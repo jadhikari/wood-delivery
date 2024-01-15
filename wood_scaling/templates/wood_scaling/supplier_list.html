@@ -7,7 +7,7 @@
 
         
         {% if perms.wood_scaling.add_supplier %}
-            <a href="{% url 'add_supplier' %}" class="btn btn-primary float-right" style="padding:5px;margin-right:20px;">Add Supplier</a>
+            <a href="#" class="btn btn-primary float-right" id="addSupplierBtn" style="padding:5px;margin-right:20px;">Add Supplier</a>
         {% endif %}
         
 
@@ -47,7 +47,8 @@
                         <td>
                             
                             {% if perms.wood_scaling.change_supplier %}
-                                <a href="{% url 'edit_supplier' supplier.id %}">Edit</a>
+                                <a href="#" id="editSupplierBtn" class="editSupplierBtn" data-supplier-id="{{ supplier.id }}">Edit</a>
+                                
                             {% else %}
                                 None
                             {% endif %}
@@ -57,6 +58,35 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <script>
+            document.getElementById('addSupplierBtn').addEventListener('click', function (e) {
+                e.preventDefault();
+    
+                if (confirm("Do you want to add a supplier?")) {
+                    window.location.href = "{% url 'add_supplier' %}";
+                } else {
+                    // Do nothing or redirect to another page if needed
+                }
+            });
+
+            var editButtons = document.querySelectorAll('.editSupplierBtn');
+
+            editButtons.forEach(function(button) {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    var supplierId = this.getAttribute('data-supplier-id');
+                    console.log(supplierId);
+
+                    if (confirm("Are you sure you want to edit this supplier?")) {
+                        window.location.href = "{% url 'edit_supplier' 0 %}".replace('0', supplierId);
+                    } else {
+                        // Do nothing or provide feedback to the user
+                    }
+                });
+            });
+        </script>
     
 
 {% endblock %}
